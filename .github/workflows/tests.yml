@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Lint with pylint (if applicable)
+      run: |
+        pip install pylint
+        pylint **/*.py || true
+    
+    - name: Test imports
+      run: |
+        python -c "import torch; print('PyTorch OK')"
+        python -c "from transformers import BertTokenizer; print('Transformers OK')"
+        python -c "import gradio; print('Gradio OK')"
