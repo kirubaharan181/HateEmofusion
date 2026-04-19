@@ -1,79 +1,72 @@
-# 🚀 Quick Reference - Push to GitHub
+# HateFusion Quick Reference
 
-## ✅ What's Done
-- Git repository initialized locally
-- All files staged and committed
-- Remote configured: `origin` → `https://github.com/kirubaharan181/HateEmofusion.git`
+## What is in this repository
 
-## 📋 What You Need to Do
+- `HateFusion_Complete_21_Cells (2) - Copy.ipynb` - main notebook pipeline.
+- `requirements.txt` - Python dependencies.
+- `docs/` - installation, usage, model, dataset, and architecture notes.
+- `data/` - local datasets, ignored by git because of size and licensing.
+- `models/` - local trained model checkpoints, ignored by git because of size.
+- `results/` and `logs/` - local run outputs, ignored by git.
 
-### Step 1: Create Empty Repository on GitHub (1 min)
-```
-Go to: https://github.com/new
-- Repository name: HateEmofusion
-- Description: Advanced Hate Speech Detection with Emoji-Aware Features
-- Visibility: Public
-- Initialize: ❌ (leave blank)
-Click: Create repository
-```
+## Setup
 
-### Step 2: Get GitHub Authentication
-
-**Option A: Personal Access Token (Easiest for HTTPS)**
-```
-1. https://github.com/settings/tokens
-2. Generate new token (classic)
-3. Name: HateFusion-Upload
-4. Expiration: 90 days
-5. Scope: ✓ repo
-6. Copy token (save it!)
-```
-
-**Option B: SSH Key (Skip if unsure)**
-```
-Already have SSH? Just use it.
-No SSH? Use Option A instead.
-```
-
-### Step 3: Push Code (2 min)
-
-**If using PAT Token:**
 ```bash
-cd D:\hatefusion_project\HateFusion
-git push -u origin main
-# Username: kirubaharan181
-# Password: paste your token here (appears as dots)
+python -m venv venv
+venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-**If using SSH:**
+On Linux or macOS:
+
 ```bash
-git remote set-url origin git@github.com:kirubaharan181/HateEmofusion.git
-git push -u origin main
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-## ✨ Done!
+## Run the notebook
 
-After successful push:
-- View: https://github.com/kirubaharan181/HateEmofusion
-- Add topics: Settings → Topics → Add: hate-speech, nlp, transformers, pytorch, bert
-- Share with others!
+```bash
+jupyter notebook "HateFusion_Complete_21_Cells (2) - Copy.ipynb"
+```
 
-## ⚠️ Common Issues
+## Use a local model
 
-| Issue | Solution |
-|-------|----------|
-| "Repository not found" | Create it at https://github.com/new first |
-| "Authentication failed" | Check your PAT/SSH key |
-| "fatal: the remote end hung up" | Try again, network issue |
-| "Rejected" | Run: `git pull origin main --allow-unrelated-histories` then push |
+```python
+from transformers import BertForSequenceClassification, BertTokenizer
+import torch
 
-## 📞 Need Help?
+model_path = "models/ihc_3way_bert"
+model = BertForSequenceClassification.from_pretrained(model_path)
+tokenizer = BertTokenizer.from_pretrained(model_path)
 
-1. Check: `git status`
-2. Check remote: `git remote -v`
-3. Check commits: `git log --oneline`
-4. If stuck: Copy error message and search GitHub docs
+text = "This is a test message"
+inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=128)
 
----
+with torch.no_grad():
+    outputs = model(**inputs)
+    prediction = torch.argmax(outputs.logits, dim=1).item()
 
-**Time to complete: ~5 minutes**
+labels = {0: "Clean", 1: "Implicit Hate", 2: "Explicit Hate"}
+print(labels[prediction])
+```
+
+## Important local files
+
+The repository does not include datasets or trained model weights. Keep them in:
+
+- `data/`
+- `models/`
+
+If another machine clones this project, those folders must be restored separately before running model inference or full training.
+
+## Documentation
+
+- `docs/INSTALLATION.md` - environment setup.
+- `docs/USAGE.md` - inference and training examples.
+- `docs/MODELS.md` - model descriptions.
+- `docs/DATASETS.md` - dataset notes.
+- `docs/ARCHITECTURE.md` - pipeline architecture.

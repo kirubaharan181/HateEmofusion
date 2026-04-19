@@ -103,22 +103,12 @@ Place them in the `data/` directory.
 ### Option 1: Jupyter Notebook
 
 ```bash
-jupyter notebook HateFusion_Complete_21_Cells.ipynb
+jupyter notebook "HateFusion_Complete_21_Cells (2) - Copy.ipynb"
 ```
 
 ### Option 2: Interactive Gradio Interface
 
-```bash
-python -c "from HateFusion_Complete_21_Cells import app; app.launch()"
-```
-
-### Option 3: Flask API
-
-```bash
-python app_flask.py
-```
-
-Then access at `http://localhost:5000`
+Use the Gradio example in [USAGE.md](USAGE.md), or run the Gradio cells inside the notebook.
 
 ## Next Steps
 

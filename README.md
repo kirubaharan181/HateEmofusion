@@ -61,7 +61,7 @@ Trained and evaluated on multiple diverse datasets:
 
 ```
 HateFusion/
-├── 📓 HateFusion_Complete_21_Cells.ipynb     # Main notebook with full pipeline
+├── 📓 HateFusion_Complete_21_Cells (2) - Copy.ipynb  # Main notebook with full pipeline
 ├── 📊 data/                                   # Datasets and emoji dictionaries
 │   ├── toxigen.csv                           # Toxigen dataset (165 MB)
 │   ├── implicit_hate_v1_stg*.csv             # Implicit Hate Corpus
@@ -74,9 +74,8 @@ HateFusion/
 │   ├── ihc_7way_bert/                        # BERT for 7-way classification
 │   └── ihc_7way_distilbert/                  # DistilBERT for 7-way classification
 ├── 📈 results/                                # Evaluation results and metrics
-├── 📉 figures/                                # Visualizations and plots
 ├── 📝 logs/                                   # Training logs
-├── 🔧 src/                                    # Source code (Python modules)
+├── .github/workflows/ci.yml                   # Lightweight repository validation
 └── 📚 docs/                                   # Documentation
 
 ```
@@ -113,22 +112,13 @@ pip install -r requirements.txt
 
 #### Option 1: Jupyter Notebook (Recommended for Exploration)
 ```bash
-jupyter notebook HateFusion_Complete_21_Cells.ipynb
+jupyter notebook "HateFusion_Complete_21_Cells (2) - Copy.ipynb"
 ```
 
 #### Option 2: Interactive Gradio Interface
-```python
-from HateFusion_Complete_21_Cells import HateFusion_App
-HateFusion_App.launch()
-```
+The repository does not currently include a separate app module. Use the Gradio example in [docs/USAGE.md](docs/USAGE.md), or run the relevant Gradio cells from the notebook.
 
-#### Option 3: Flask API
-```python
-from flask_app import app
-app.run(debug=False, host='0.0.0.0', port=5000)
-```
-
-#### Option 4: Python Code
+#### Option 3: Python Code
 ```python
 from transformers import BertForSequenceClassification, BertTokenizer
 import torch
